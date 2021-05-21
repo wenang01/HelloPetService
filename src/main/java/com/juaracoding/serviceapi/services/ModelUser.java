@@ -1,6 +1,7 @@
 package com.juaracoding.serviceapi.services;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,7 +30,7 @@ public class ModelUser implements ModelUserInterface {
 	@Override
 	public User getUserById(String id) {
 		// TODO Auto-generated method stub
-		return this.userRepo.findById(Long.parseLong(id));
+		return this.userRepo.findById(Long.parseLong(id)).get();
 	}
 
 	@Override
