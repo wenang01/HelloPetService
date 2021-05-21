@@ -1,14 +1,12 @@
 package com.juaracoding.serviceapi.entity;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+import java.util.HashSet;
+import java.util.Set;
 
+import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -19,24 +17,43 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 
 @Entity
-@Table(name="users")
+@Table(	name = "users", 
+		uniqueConstraints = { 
+			@UniqueConstraint(columnNames = "username"),
+			@UniqueConstraint(columnNames = "email") 
+		})
 public class User {
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+
+	@Size(max = 20)
 	
-		@Id
-		@GeneratedValue(strategy = GenerationType.IDENTITY)
-		private long id;
-		private String username;
-		private String email;
-		private String password;
-		private String name;
-		private String roles;
+	private String username;
+
+	@NotBlank
+	@Email
+	@Size(max = 50)
+	private String email;
+
+	@NotBlank
+	@Size(max = 120)
+	private String password;
+
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(	name = "user_roles", 
+				joinColumns = @JoinColumn(name = "user_id"), 
+				inverseJoinColumns = @JoinColumn(name = "role_id"))
+	private Set<Role> role = new HashSet<>();
+
+	    private String name;
+		private String address;		
+		private String birthday;
+		private String gender;
 		
-		@OneToOne(cascade = CascadeType.ALL)
-		@JoinColumn(name = "id_users_doctor", referencedColumnName = "id")
-		private Doctor doctor;
-
-		@OneToOne(cascade = CascadeType.ALL)
-		@JoinColumn(name = "id_users_client", referencedColumnName = "id")
-		private Client client;
-
+		public User(String name, String email, String password) {
+			this.name = name;
+			this.email = email;
+			this.password = password;
+		}
 }

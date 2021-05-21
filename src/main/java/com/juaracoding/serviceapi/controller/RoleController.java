@@ -3,6 +3,7 @@ package com.juaracoding.serviceapi.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,37 +13,25 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.juaracoding.serviceapi.entity.User;
-import com.juaracoding.serviceapi.repository.UserRepository;
+import com.juaracoding.serviceapi.entity.Role;
+import com.juaracoding.serviceapi.repository.RoleRepository;
 
+@Controller
 @RestController
-@RequestMapping("/user")
-public class UserController {
+@RequestMapping("/roles")
+public class RoleController {
 	@Autowired
-	UserRepository userRepo;
+	RoleRepository roleRepo;
 	
 	@GetMapping("/")
-	public List<User> getAll(){
-		return (List<User>) userRepo.findAll();
+	public List<Role> getAll(){
+		return (List<Role>) roleRepo.findAll();
 	}
-	
+		
 	@PostMapping("/add")
-	public String addUser(@RequestBody User user) {
-		userRepo.save(user);
+	public String addRole(@RequestBody Role role) {
+		roleRepo.save(role);
 		return "Insert Berhasil";
-	}
-	
-	@DeleteMapping("/delete/{id}")
-	public String deleteUser(@PathVariable String id) {
-		userRepo.deleteById(Long.parseLong(id));
-		return "Delete Berhasil";
-	}
-	
-	@PutMapping("/update/{id}")
-	public String updateUser(@PathVariable String id, @RequestBody User user) {
-		user.setId(Long.parseLong(id));
-		userRepo.save(user);
-		return "Update Berhasil";
 	}
 
 }
