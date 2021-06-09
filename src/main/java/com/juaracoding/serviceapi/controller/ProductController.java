@@ -109,7 +109,7 @@ public class ProductController {
     	Products product = new Products(updateProduct.getProductName(), updateProduct.getPrice(), 
     			updateProduct.getStok(), updateProduct.getProdImage(),
     			updateProduct.getDesciption());
-//    	model.addAttribute("products", products);
+//    	model.addAttribute("products", products); 
     	product.setId(Long.parseLong(id));
     	this.productRepository.save(product);
 		return "Product {id} "+ products +" Berhasil diupdate dengan "+product;

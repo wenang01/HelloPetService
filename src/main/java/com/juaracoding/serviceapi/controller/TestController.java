@@ -1,26 +1,46 @@
 package com.juaracoding.serviceapi.controller;
 
+import java.util.ArrayList;
+
+import org.apache.tomcat.util.json.JSONParser;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.view.RedirectView;
+
+import com.juaracoding.serviceapi.services.ModelCategory;
+import com.juaracoding.serviceapi.services.ModelProducts;
+import com.juaracoding.serviceapi.services.ModelProductsGalery;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/api/test")
 public class TestController {
 	
+	@Autowired
+	ModelProducts modelProducts;
+	
+	@Autowired
+	ModelProductsGalery modelProductGalery;
+	
+	@Autowired
+	ModelCategory modelCategory;
+	
 	@GetMapping("/all")
-	public String allAccess() {
-		return "Public Content.";
+	public String allAccess(Model model) {
+		model.addAttribute("listProducts", modelProducts.getAllProducts());
+//		JSONParser jparse = new JSONParser("listProducts");
+		return (String) model.getAttribute("listProducts");
+//		return jparse.toString();
 	}
 	
 	@GetMapping("/user")
 	@PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
 	public String userAccess() {
+		
 		return "User Content.";
 	}
 
