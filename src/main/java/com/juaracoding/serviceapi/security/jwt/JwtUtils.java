@@ -17,10 +17,10 @@ import io.jsonwebtoken.*;
 public class JwtUtils {
 	private static final Logger logger = LoggerFactory.getLogger(JwtUtils.class);
 
-	@Value("${hellopet.app.jwtSecret}")
+	@Value("${bezkoder.app.jwtSecret}")
 	private String jwtSecret;
 
-	@Value("${hellopet.app.jwtExpirationMs}")
+	@Value("${bezkoder.app.jwtExpirationMs}")
 	private int jwtExpirationMs;
 
 	public String generateJwtToken(Authentication authentication) {

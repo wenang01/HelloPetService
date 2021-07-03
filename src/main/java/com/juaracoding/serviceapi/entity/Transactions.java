@@ -2,6 +2,8 @@ package com.juaracoding.serviceapi.entity;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,16 +19,26 @@ public class Transactions {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	private int insurance_price;
-	private int shipping_price;
-	private int total_price;
-	private String transaction_status;
+	private int insurancePrice;
+	private int shippingPrice;
+	private int totalPrice;
+	private String transactionStatus;
 	private String code;
 
-	@ManyToOne
-    @JoinColumn(name="users_id")
-    private User user;
+//	@JsonIgnore
+//	@ManyToOne
+//    @JoinColumn(name="users_id")
+//    private User users;
 	
-	@OneToOne(mappedBy = "transaction")
+	@JsonIgnore
+	@OneToOne(mappedBy = "transactions")
     private TransactionDetails transaction_details;
+	
+//	public Transactions(int insurancePrice, int shippingPrice, int totalPrice, String transactionStatus, String code) {
+//		this.insurancePrice = insurancePrice;
+//		this.shippingPrice = shippingPrice;
+//		this.totalPrice = totalPrice;
+//		this.transactionStatus = transactionStatus;
+//		this.code = code;
+//	}
 }

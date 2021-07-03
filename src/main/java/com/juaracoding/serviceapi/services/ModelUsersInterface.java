@@ -12,7 +12,7 @@ public interface ModelUsersInterface {
 	public User getUserByName(String name);
 	
 	public User addUser (User user);
-	public Optional<User> getUserById(String id);
+	public User getUserById(String id);
 	public void deleteUser(String id);
 
 }

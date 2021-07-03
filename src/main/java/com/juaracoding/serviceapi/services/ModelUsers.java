@@ -40,7 +40,7 @@ public class ModelUsers implements ModelUsersInterface {
 	}
 
 	@Override
-	public Optional<User> getUserById(String id) {
+	public User getUserById(String id) {
 		// TODO Auto-generated method stub
 		return this.userRepo.findById(Long.parseLong(id)).get();
 	}
